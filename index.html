@@ -6,324 +6,113 @@
 <meta name="theme-color" content="#07111f">
 <title>DUHNASTY — Salary & Draft Dollar Dashboard</title>
 <style>
-:root{
-  --bg:#07111f;--panel:#0d1b2a;--panel2:#10243a;--ink:#f5f7fb;--muted:#9db0c6;
-  --line:#223a55;--accent:#65b7ff;--good:#66d9a5;--warn:#ffc857;--bad:#ff7a90;
-  --shadow:0 12px 30px rgba(0,0,0,.24)
-}
+:root{--bg:#07111f;--panel:#0d1b2a;--panel2:#10243a;--ink:#f5f7fb;--muted:#9db0c6;--line:#223a55;--accent:#65b7ff;--good:#66d9a5;--warn:#ffc857;--bad:#ff7a90;--shadow:0 12px 30px rgba(0,0,0,.24)}
 *{box-sizing:border-box}
 html,body{margin:0;background:linear-gradient(180deg,#06101c,#0a1726 48%,#07111f);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
 body{min-height:100vh}
 header{position:sticky;top:0;z-index:20;background:rgba(7,17,31,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .wrap{max-width:1180px;margin:auto;padding:16px}
-.brand{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.brand h1{font-size:20px;margin:0;letter-spacing:.04em}
-.brand small{display:block;color:var(--muted);margin-top:4px}
+.brand{display:flex;justify-content:space-between;gap:12px;align-items:center}.brand h1{font-size:20px;margin:0;letter-spacing:.04em}.brand small{display:block;color:var(--muted);margin-top:4px}
 .actions{display:flex;gap:8px;align-items:center}
-button,select,input{font:inherit}
-button{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:10px 13px;border-radius:12px;font-weight:700}
+button,select,input{font:inherit}button{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:10px 13px;border-radius:12px;font-weight:700}
 button:active{transform:translateY(1px)}
 main{padding-bottom:48px}
 .status{margin:16px 0;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(13,27,42,.82);color:var(--muted)}
-.status.good{border-color:rgba(102,217,165,.45);color:#c7f6e4}
-.status.warn{border-color:rgba(255,200,87,.45);color:#ffe6a6}
-.status.bad{border-color:rgba(255,122,144,.45);color:#ffd0d8}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.card{background:linear-gradient(180deg,rgba(16,36,58,.96),rgba(13,27,42,.96));border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
-.kpi .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
-.kpi .value{font-size:27px;font-weight:800;margin-top:7px}
-.kpi .sub{color:var(--muted);font-size:12px;margin-top:4px}
+.status.good{border-color:rgba(102,217,165,.45);color:#c7f6e4}.status.warn{border-color:rgba(255,200,87,.45);color:#ffe6a6}.status.bad{border-color:rgba(255,122,144,.45);color:#ffd0d8}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:linear-gradient(180deg,rgba(16,36,58,.96),rgba(13,27,42,.96));border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.kpi .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.kpi .value{font-size:27px;font-weight:800;margin-top:7px}.kpi .sub{color:var(--muted);font-size:12px;margin-top:4px}
 h2{font-size:17px;margin:24px 0 10px}
-.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.team-card{cursor:pointer}
-.team-card:hover{border-color:#3e6387}
-.team-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.team-name{font-weight:800;font-size:16px}
-.team-owner{color:var(--muted);font-size:12px;margin-top:3px}
-.money{font-size:24px;font-weight:900;color:var(--good)}
-.bar{height:7px;background:#07111f;border-radius:99px;overflow:hidden;margin-top:12px}
-.bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--good),var(--warn));border-radius:99px}
-.mini{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:8px}
-.toolbar{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
-.toolbar input,.toolbar select{min-height:42px;background:#0b1a2a;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:0 12px}
-.toolbar input{flex:1;min-width:190px}
-.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:rgba(13,27,42,.92)}
-table{width:100%;border-collapse:collapse;min-width:670px}
-th,td{text-align:left;padding:12px 12px;border-bottom:1px solid var(--line)}
-th{position:sticky;top:0;background:#10243a;color:#bed0e1;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
-td{font-size:14px}
-tr:last-child td{border-bottom:0}
-.cost{font-weight:800}
-.unknown{color:var(--warn);font-weight:800}
-.pos{display:inline-block;padding:3px 7px;border:1px solid var(--line);border-radius:8px;font-size:11px;color:#c9d7e5}
-.source{color:var(--muted);font-size:12px}
-.trade{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.trade-side label{display:block;color:var(--muted);font-size:12px;margin:9px 0 5px}
-.trade-side select,.trade-side input{width:100%;min-height:43px;background:#0b1a2a;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:0 10px}
-.trade-result{margin-top:12px;padding:12px;border-radius:13px;background:#081624;border:1px solid var(--line)}
-.big-result{font-size:23px;font-weight:900;color:var(--good)}
-.notice{color:var(--muted);font-size:12px;line-height:1.5}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);font-size:11px}
-.dot{width:7px;height:7px;background:var(--good);border-radius:50%}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.team-card{cursor:pointer}.team-card:hover{border-color:#3e6387}
+.team-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.team-name{font-weight:800;font-size:16px}.team-owner{color:var(--muted);font-size:12px;margin-top:3px}.money{font-size:24px;font-weight:900;color:var(--good)}
+.bar{height:7px;background:#07111f;border-radius:99px;overflow:hidden;margin-top:12px}.bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--good),var(--warn));border-radius:99px}
+.mini{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:8px}.breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}.breakdown div{background:#081624;border:1px solid var(--line);border-radius:10px;padding:8px}.breakdown b{display:block;font-size:14px}.breakdown span{font-size:10px;color:var(--muted);text-transform:uppercase}
+.toolbar{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}.toolbar input,.toolbar select{min-height:42px;background:#0b1a2a;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:0 12px}.toolbar input{flex:1;min-width:190px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:rgba(13,27,42,.92)}table{width:100%;border-collapse:collapse;min-width:720px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}th{position:sticky;top:0;background:#10243a;color:#bed0e1;font-size:12px;text-transform:uppercase;letter-spacing:.06em}td{font-size:14px}tr:last-child td{border-bottom:0}
+.cost{font-weight:800}.unknown{color:var(--warn);font-weight:800}.pos{display:inline-block;padding:3px 7px;border:1px solid var(--line);border-radius:8px;font-size:11px;color:#c9d7e5}.source{color:var(--muted);font-size:12px}
+.trade{display:grid;grid-template-columns:1fr 1fr;gap:12px}.trade-side label{display:block;color:var(--muted);font-size:12px;margin:9px 0 5px}.trade-side select,.trade-side input{width:100%;min-height:43px;background:#0b1a2a;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:0 10px}
+.player-pick-list{margin-top:8px;max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:#081624}.player-pick{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.player-pick:last-child{border-bottom:0}.player-pick input{width:auto;min-height:auto}.player-pick .grow{flex:1}.player-pick .sal{font-weight:800}
+.trade-result{margin-top:12px;padding:12px;border-radius:13px;background:#081624;border:1px solid var(--line)}.big-result{font-size:23px;font-weight:900;color:var(--good)}.notice{color:var(--muted);font-size:12px;line-height:1.5}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);font-size:11px}.dot{width:7px;height:7px;background:var(--good);border-radius:50%}
+.issue-card{border-color:rgba(255,200,87,.45)}.issue-name{font-weight:800}.issue-meta{color:var(--muted);font-size:12px;margin-top:4px}
 footer{color:var(--muted);font-size:11px;text-align:center;padding:22px}
-@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.team-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){
-  .wrap{padding:12px}.brand{align-items:flex-start}.brand h1{font-size:17px}
-  .grid,.team-grid,.trade{grid-template-columns:1fr}.actions{flex-direction:column;align-items:stretch}
-  button{padding:9px 11px}.kpi .value{font-size:24px}
-}
-/* View-only friction: not a security boundary, but discourages casual copying. */
-body{-webkit-user-select:none;user-select:none}
-input,select{-webkit-user-select:auto;user-select:auto}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.team-grid{grid-template-columns:1fr 1fr}.breakdown{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.wrap{padding:12px}.brand{align-items:flex-start}.brand h1{font-size:17px}.grid,.team-grid,.trade{grid-template-columns:1fr}.actions{flex-direction:column;align-items:stretch}button{padding:9px 11px}.kpi .value{font-size:24px}}
+body{-webkit-user-select:none;user-select:none}input,select{-webkit-user-select:auto;user-select:auto}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap brand">
-    <div>
-      <h1>DUHNASTY</h1>
-      <small>Live Salary & Draft Dollar Dashboard</small>
-    </div>
-    <div class="actions">
-      <span class="pill"><span class="dot"></span> Sleeper live</span>
-      <button id="refreshBtn">Refresh</button>
-    </div>
-  </div>
-</header>
-
+<header><div class="wrap brand"><div><h1>DUHNASTY</h1><small>Live Salary & Draft Dollar Dashboard</small></div><div class="actions"><span class="pill"><span class="dot"></span> Sleeper live</span><button id="refreshBtn">Refresh</button></div></div></header>
 <main class="wrap">
-  <div id="status" class="status">Loading DUHNASTY from Sleeper…</div>
+<div id="status" class="status">Loading DUHNASTY from Sleeper…</div>
 
-  <section class="grid">
-    <div class="card kpi"><div class="label">Annual Draft Budget</div><div class="value">$300</div><div class="sub">League starting maximum</div></div>
-    <div class="card kpi"><div class="label">League Teams</div><div id="teamCount" class="value">—</div><div class="sub">Current rosters</div></div>
-    <div class="card kpi"><div class="label">Rostered Players</div><div id="playerCount" class="value">—</div><div class="sub">Across all teams</div></div>
-    <div class="card kpi"><div class="label">Salary Issues</div><div id="issueCount" class="value">—</div><div class="sub">Missing acquisition cost</div></div>
-  </section>
+<section class="grid">
+<div class="card kpi"><div class="label">Annual Draft Budget</div><div class="value">$300</div><div class="sub">Draft Dollar starting maximum</div></div>
+<div class="card kpi"><div class="label">Waiver Budget</div><div class="value">$100</div><div class="sub">Separate in-season FAAB pool</div></div>
+<div class="card kpi"><div class="label">League Teams</div><div id="teamCount" class="value">—</div><div class="sub">Current rosters</div></div>
+<div class="card kpi"><div class="label">Salary Issues</div><div id="issueCount" class="value">—</div><div class="sub">Missing acquisition cost</div></div>
+</section>
 
-  <h2>League Draft Dollars</h2>
-  <div id="teams" class="team-grid"></div>
+<h2>League Draft Dollars</h2><div id="teams" class="team-grid"></div>
 
-  <h2 id="rosterHeading">All Players</h2>
-  <div class="toolbar">
-    <input id="searchBox" type="search" placeholder="Search player or team">
-    <select id="teamFilter"><option value="">All teams</option></select>
-    <select id="posFilter"><option value="">All positions</option><option>QB</option><option>RB</option><option>WR</option><option>TE</option><option>K</option><option>DEF</option></select>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Player</th><th>Pos</th><th>Team</th><th>Salary</th><th>Acquired</th></tr></thead>
-      <tbody id="playerRows"></tbody>
-    </table>
-  </div>
+<section id="issuesSection" style="display:none">
+<h2>⚠️ Missing Salaries</h2>
+<p class="notice">These players have no recoverable acquisition cost from Sleeper. They are excluded from salary totals until a commissioner override is added to <code>duhnasty-data.json</code>.</p>
+<div id="issues" class="team-grid"></div>
+</section>
 
-  <h2>Trade Salary Calculator</h2>
-  <div class="trade">
-    <div class="card trade-side">
-      <strong>Team A</strong>
-      <label>Team</label><select id="teamA"></select>
-      <label>Salary being sent</label><input id="sendA" type="number" min="0" value="0" inputmode="numeric">
-      <label>Salary being received</label><input id="recvA" type="number" min="0" value="0" inputmode="numeric">
-      <div class="trade-result">
-        <div class="notice">Projected Draft Dollars after trade</div>
-        <div id="resultA" class="big-result">—</div>
-      </div>
-    </div>
-    <div class="card trade-side">
-      <strong>Team B</strong>
-      <label>Team</label><select id="teamB"></select>
-      <label>Salary being sent</label><input id="sendB" type="number" min="0" value="0" inputmode="numeric">
-      <label>Salary being received</label><input id="recvB" type="number" min="0" value="0" inputmode="numeric">
-      <div class="trade-result">
-        <div class="notice">Projected Draft Dollars after trade</div>
-        <div id="resultB" class="big-result">—</div>
-      </div>
-    </div>
-  </div>
-  <p class="notice">Salary rule: drafted player's auction price becomes salary; a paid waiver acquisition resets salary to the winning waiver bid; salary follows the player unchanged through trades. Draft Dollars = $300 − current roster salary. Free-agent adds without a FAAB bid are treated as $0 unless the league later chooses a minimum salary rule.</p>
+<h2 id="rosterHeading">All Players</h2>
+<div class="toolbar"><input id="searchBox" type="search" placeholder="Search player or team"><select id="teamFilter"><option value="">All teams</option></select><select id="posFilter"><option value="">All positions</option><option>QB</option><option>RB</option><option>WR</option><option>TE</option><option>K</option><option>DEF</option></select></div>
+<div class="table-wrap"><table><thead><tr><th>Player</th><th>Pos</th><th>Team</th><th>Salary</th><th>Acquired</th></tr></thead><tbody id="playerRows"></tbody></table></div>
+
+<h2>Draft Dollar Ledger</h2>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>From</th><th>To</th><th>DD</th><th>Note</th></tr></thead><tbody id="ddRows"></tbody></table></div>
+
+<h2>Trade Calculator</h2>
+<div class="trade">
+<div class="card trade-side"><strong>Team A</strong><label>Team</label><select id="teamA"></select><label>Players Team A sends</label><div id="playersA" class="player-pick-list"></div><label>Draft Dollars Team A sends</label><input id="ddA" type="number" min="0" value="0" inputmode="numeric"><div class="trade-result"><div class="notice">Salary sent / received</div><div id="flowA" style="font-weight:800;margin:4px 0 10px">—</div><div class="notice">Projected Draft Dollars after trade</div><div id="resultA" class="big-result">—</div></div></div>
+<div class="card trade-side"><strong>Team B</strong><label>Team</label><select id="teamB"></select><label>Players Team B sends</label><div id="playersB" class="player-pick-list"></div><label>Draft Dollars Team B sends</label><input id="ddB" type="number" min="0" value="0" inputmode="numeric"><div class="trade-result"><div class="notice">Salary sent / received</div><div id="flowB" style="font-weight:800;margin:4px 0 10px">—</div><div class="notice">Projected Draft Dollars after trade</div><div id="resultB" class="big-result">—</div></div></div>
+</div>
+<p class="notice">Formula: <strong>Available DD = $300 − current player salaries + DD received − DD sent.</strong> Waiver FAAB is a separate $100 seasonal pool; a winning waiver bid becomes that player's salary but does not directly transfer Draft Dollars.</p>
 </main>
-
 <footer>DUHNASTY · League 1307048224447561728 · Draft 1391509258436104192</footer>
 
 <script>
-const LEAGUE_ID = "1307048224447561728";
-const DRAFT_ID = "1391509258436104192";
-const CAP = 300;
-const API = "https://api.sleeper.app/v1";
-let state = { teams:[], players:[], issues:[] };
-
-const $ = id => document.getElementById(id);
-const money = n => Number.isFinite(n) ? "$"+Math.round(n).toLocaleString() : "Needs cost";
-const safe = s => String(s ?? "").replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-async function getJSON(url){
-  const r = await fetch(url, {cache:"no-store"});
-  if(!r.ok) throw new Error(`${r.status} ${r.statusText}`);
-  return r.json();
-}
-function pickAuctionAmount(p){
-  const m = p?.metadata || {};
-  const candidates = [m.amount,m.price,m.bid,m.auction_price,p.amount,p.price,p.bid];
-  for(const x of candidates){
-    if(x !== undefined && x !== null && x !== "" && !Number.isNaN(Number(x))) return Number(x);
-  }
-  return null;
-}
-function playerLabel(id, allPlayers, draftMeta){
-  const p = allPlayers[id];
-  if(p) return {name:[p.first_name,p.last_name].filter(Boolean).join(" ") || p.full_name || id, pos:p.position || "", nfl:p.team || ""};
-  const m = draftMeta[id] || {};
-  return {name:[m.first_name,m.last_name].filter(Boolean).join(" ") || id, pos:m.position || "", nfl:m.team || ""};
-}
-async function loadTransactions(){
-  const weeks = Array.from({length:19},(_,i)=>i);
-  const settled = await Promise.allSettled(weeks.map(w=>getJSON(`${API}/league/${LEAGUE_ID}/transactions/${w}`)));
-  const map = new Map();
-  settled.forEach(x=>{
-    if(x.status==="fulfilled" && Array.isArray(x.value)){
-      x.value.forEach(t=>{ if(t?.transaction_id) map.set(t.transaction_id,t); });
-    }
-  });
-  return [...map.values()].filter(t=>t?.status==="complete").sort((a,b)=>(a.created||0)-(b.created||0));
-}
+const LEAGUE_ID="1307048224447561728", DRAFT_ID="1391509258436104192", CAP=300, API="https://api.sleeper.app/v1";
+let custom={salary_overrides:{},dd_ledger:[]}, state={teams:[],players:[],issues:[]};
+const $=id=>document.getElementById(id), safe=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m])), money=n=>Number.isFinite(n)?"$"+Math.round(n).toLocaleString():"Needs cost";
+async function getJSON(url,optional=false){try{const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return await r.json()}catch(e){if(optional)return null;throw e}}
+function pickAuctionAmount(p){const m=p?.metadata||{};for(const x of [m.amount,m.price,m.bid,m.auction_price,m.cost,m.value,p.amount,p.price,p.bid])if(x!==undefined&&x!==null&&x!==""&&!Number.isNaN(Number(x)))return Number(x);return null}
+function playerLabel(id,allPlayers,draftMeta){const p=allPlayers[id];if(p)return{name:[p.first_name,p.last_name].filter(Boolean).join(" ")||p.full_name||id,pos:p.position||"",nfl:p.team||""};const m=draftMeta[id]||{};return{name:[m.first_name,m.last_name].filter(Boolean).join(" ")||id,pos:m.position||"",nfl:m.team||""}}
+async function loadTransactions(){const weeks=Array.from({length:19},(_,i)=>i);const settled=await Promise.allSettled(weeks.map(w=>getJSON(`${API}/league/${LEAGUE_ID}/transactions/${w}`)));const map=new Map();settled.forEach(x=>{if(x.status==="fulfilled"&&Array.isArray(x.value))x.value.forEach(t=>{if(t?.transaction_id)map.set(t.transaction_id,t)})});return[...map.values()].filter(t=>t?.status==="complete").sort((a,b)=>(a.created||0)-(b.created||0))}
+function ddNetFor(name,username){let received=0,sent=0;for(const x of custom.dd_ledger||[]){const amt=Number(x.amount)||0;if(x.to===name||x.to===username)received+=amt;if(x.from===name||x.from===username)sent+=amt}return{received,sent,net:received-sent}}
 async function load(){
-  $("status").className="status";
-  $("status").textContent="Refreshing DUHNASTY from Sleeper…";
-  try{
-    const [league, users, rosters, picks, allPlayers, transactions] = await Promise.all([
-      getJSON(`${API}/league/${LEAGUE_ID}`),
-      getJSON(`${API}/league/${LEAGUE_ID}/users`),
-      getJSON(`${API}/league/${LEAGUE_ID}/rosters`),
-      getJSON(`${API}/draft/${DRAFT_ID}/picks`),
-      getJSON(`${API}/players/nfl`),
-      loadTransactions()
-    ]);
-
-    const userMap = Object.fromEntries((users||[]).map(u=>[u.user_id,u]));
-    const rosterMap = Object.fromEntries((rosters||[]).map(r=>[String(r.roster_id),r]));
-    const draftMeta = {};
-    const salary = {};
-    const source = {};
-
-    // Base salaries from auction draft.
-    (picks||[]).forEach(p=>{
-      const id=String(p.player_id);
-      draftMeta[id]=p.metadata||{};
-      const amt=pickAuctionAmount(p);
-      if(amt !== null){
-        salary[id]=amt;
-        source[id]="Draft";
-      }
-    });
-
-    // Replay acquisitions in chronological order. Trades preserve existing salary.
-    transactions.forEach(t=>{
-      if(!t.adds) return;
-      const type=String(t.type||"").toLowerCase();
-      if(type==="trade") return;
-      const bidRaw=t?.settings?.waiver_bid;
-      const hasBid=bidRaw!==undefined && bidRaw!==null && bidRaw!=="" && !Number.isNaN(Number(bidRaw));
-      Object.keys(t.adds).forEach(id=>{
-        if(type==="waiver" || hasBid){
-          salary[id]=hasBid ? Number(bidRaw) : 0;
-          source[id]=hasBid ? "Waiver" : "Waiver ($0)";
-        }else if(type==="free_agent"){
-          salary[id]=0;
-          source[id]="Free agent";
-        }
-      });
-    });
-
-    const teams=(rosters||[]).map(r=>{
-      const u=userMap[r.owner_id]||{};
-      const teamName=u?.metadata?.team_name || u.display_name || u.username || `Roster ${r.roster_id}`;
-      const ids=(r.players||[]).map(String);
-      let total=0, known=0, missing=0;
-      ids.forEach(id=>{
-        if(Number.isFinite(salary[id])) { total+=salary[id]; known++; }
-        else missing++;
-      });
-      return {roster_id:String(r.roster_id), owner_id:r.owner_id, teamName, username:u.username||u.display_name||"", ids, total, known, missing, draftDollars:CAP-total};
-    }).sort((a,b)=>b.draftDollars-a.draftDollars);
-
-    const rows=[];
-    teams.forEach(t=>{
-      t.ids.forEach(id=>{
-        const pl=playerLabel(id,allPlayers,draftMeta);
-        rows.push({id,...pl,team:t.teamName,username:t.username,roster_id:t.roster_id,salary:Number.isFinite(salary[id])?salary[id]:null,source:source[id]||"Unknown"});
-      });
-    });
-    rows.sort((a,b)=>a.team.localeCompare(b.team)||((b.salary??-1)-(a.salary??-1))||a.name.localeCompare(b.name));
-    const issues=rows.filter(p=>p.salary===null);
-
-    state={league,teams,players:rows,issues};
-    render();
-    const now=new Date();
-    $("status").className=issues.length ? "status warn" : "status good";
-    $("status").textContent=issues.length
-      ? `Live data loaded ${now.toLocaleString()}. ${issues.length} rostered player(s) have no recoverable acquisition cost; those are excluded from team salary until corrected.`
-      : `Live data loaded ${now.toLocaleString()}. All rostered player salaries were recovered.`;
-  }catch(err){
-    console.error(err);
-    $("status").className="status bad";
-    $("status").textContent=`Could not load Sleeper data: ${err.message}. If this file is opened directly from the Files app, publish it as a web page first and open the published link in Safari.`;
-  }
+ $("status").className="status";$("status").textContent="Refreshing DUHNASTY from Sleeper…";
+ try{
+   custom=await getJSON(`duhnasty-data.json?t=${Date.now()}`,true)||{salary_overrides:{},dd_ledger:[]};
+   const [league,users,rosters,picks,allPlayers,transactions]=await Promise.all([getJSON(`${API}/league/${LEAGUE_ID}`),getJSON(`${API}/league/${LEAGUE_ID}/users`),getJSON(`${API}/league/${LEAGUE_ID}/rosters`),getJSON(`${API}/draft/${DRAFT_ID}/picks`),getJSON(`${API}/players/nfl`),loadTransactions()]);
+   const userMap=Object.fromEntries((users||[]).map(u=>[u.user_id,u])), draftMeta={}, salary={}, source={};
+   (picks||[]).forEach(p=>{const id=String(p.player_id);draftMeta[id]=p.metadata||{};const amt=pickAuctionAmount(p);if(amt!==null){salary[id]=amt;source[id]="Draft"}});
+   transactions.forEach(t=>{if(!t.adds)return;const type=String(t.type||"").toLowerCase();if(type==="trade")return;const bid=t?.settings?.waiver_bid,hasBid=bid!==undefined&&bid!==null&&bid!==""&&!Number.isNaN(Number(bid));Object.keys(t.adds).forEach(id=>{if(type==="waiver"||hasBid){salary[id]=hasBid?Number(bid):0;source[id]=hasBid?"Waiver":"Waiver ($0)"}else if(type==="free_agent"){salary[id]=0;source[id]="Free agent"}})});
+   for(const [id,val] of Object.entries(custom.salary_overrides||{})){const amount=Number(typeof val==="object"?val.amount:val);if(Number.isFinite(amount)){salary[String(id)]=amount;source[String(id)]="Override"}}
+   const teams=(rosters||[]).map(r=>{const u=userMap[r.owner_id]||{},teamName=u?.metadata?.team_name||u.display_name||u.username||`Roster ${r.roster_id}`,ids=(r.players||[]).map(String);let total=0,missing=0;ids.forEach(id=>{if(Number.isFinite(salary[id]))total+=salary[id];else missing++});const dd=ddNetFor(teamName,u.username||u.display_name||"");return{roster_id:String(r.roster_id),teamName,username:u.username||u.display_name||"",ids,total,missing,ddReceived:dd.received,ddSent:dd.sent,ddNet:dd.net,draftDollars:CAP-total+dd.net}}).sort((a,b)=>b.draftDollars-a.draftDollars);
+   const rows=[];teams.forEach(t=>t.ids.forEach(id=>{const pl=playerLabel(id,allPlayers,draftMeta);rows.push({id,...pl,team:t.teamName,username:t.username,roster_id:t.roster_id,salary:Number.isFinite(salary[id])?salary[id]:null,source:source[id]||"Unknown"})}));rows.sort((a,b)=>a.team.localeCompare(b.team)||((b.salary??-1)-(a.salary??-1))||a.name.localeCompare(b.name));
+   state={league,teams,players:rows,issues:rows.filter(p=>p.salary===null)};render();
+   const now=new Date();$("status").className=state.issues.length?"status warn":"status good";$("status").textContent=state.issues.length?`Live data loaded ${now.toLocaleString()}. ${state.issues.length} rostered player(s) still need a salary override.`:`Live data loaded ${now.toLocaleString()}. All rostered player salaries were recovered.`;
+ }catch(err){console.error(err);$("status").className="status bad";$("status").textContent=`Could not load Sleeper data: ${err.message}`}
 }
 function render(){
-  $("teamCount").textContent=state.teams.length;
-  $("playerCount").textContent=state.players.length;
-  $("issueCount").textContent=state.issues.length;
-
-  $("teams").innerHTML=state.teams.map(t=>{
-    const used=Math.max(0,Math.min(100,(t.total/CAP)*100));
-    const issue=t.missing ? ` · ${t.missing} missing cost` : "";
-    return `<div class="card team-card" data-team="${safe(t.teamName)}">
-      <div class="team-top"><div><div class="team-name">${safe(t.teamName)}</div><div class="team-owner">@${safe(t.username||"owner")}</div></div>
-      <div class="money">${money(t.draftDollars)}</div></div>
-      <div class="bar"><span style="width:${used}%"></span></div>
-      <div class="mini"><span>Salary ${money(t.total)}</span><span>${used.toFixed(0)}% used${safe(issue)}</span></div>
-    </div>`;
-  }).join("");
-
-  const opts=state.teams.map(t=>`<option value="${safe(t.teamName)}">${safe(t.teamName)}</option>`).join("");
-  $("teamFilter").innerHTML='<option value="">All teams</option>'+opts;
-  $("teamA").innerHTML=opts; $("teamB").innerHTML=opts;
-  if(state.teams[1]) $("teamB").selectedIndex=1;
-
-  document.querySelectorAll(".team-card").forEach(el=>el.addEventListener("click",()=>{
-    $("teamFilter").value=el.dataset.team; renderRows(); $("rosterHeading").scrollIntoView({behavior:"smooth"});
-  }));
-  renderRows(); tradeCalc();
+ $("teamCount").textContent=state.teams.length;$("issueCount").textContent=state.issues.length;
+ $("teams").innerHTML=state.teams.map(t=>{const used=Math.max(0,Math.min(100,(t.total/CAP)*100));return`<div class="card team-card" data-team="${safe(t.teamName)}"><div class="team-top"><div><div class="team-name">${safe(t.teamName)}</div><div class="team-owner">@${safe(t.username||"owner")}</div></div><div class="money">${money(t.draftDollars)}</div></div><div class="bar"><span style="width:${used}%"></span></div><div class="mini"><span>Salary ${money(t.total)}</span><span>${used.toFixed(0)}% used${t.missing?` · ${t.missing} missing`:""}</span></div><div class="breakdown"><div><b>${money(CAP-t.total)}</b><span>Base DD</span></div><div><b>+${money(t.ddReceived)}</b><span>DD Received</span></div><div><b>-${money(t.ddSent)}</b><span>DD Sent</span></div><div><b>${money(t.draftDollars)}</b><span>Final DD</span></div></div></div>`}).join("");
+ $("issuesSection").style.display=state.issues.length?"block":"none";$("issues").innerHTML=state.issues.map(p=>`<div class="card issue-card"><div class="issue-name">${safe(p.name)}</div><div class="issue-meta">${safe(p.pos)} · ${safe(p.team)} · Player ID ${safe(p.id)}</div></div>`).join("");
+ const opts=state.teams.map(t=>`<option value="${safe(t.teamName)}">${safe(t.teamName)}</option>`).join("");$("teamFilter").innerHTML='<option value="">All teams</option>'+opts;$("teamA").innerHTML=opts;$("teamB").innerHTML=opts;if(state.teams[1])$("teamB").selectedIndex=1;
+ document.querySelectorAll(".team-card").forEach(el=>el.addEventListener("click",()=>{$("teamFilter").value=el.dataset.team;renderRows();$("rosterHeading").scrollIntoView({behavior:"smooth"})}));
+ renderRows();renderDDLedger();renderTradePlayers();tradeCalc()
 }
-function renderRows(){
-  const q=$("searchBox").value.trim().toLowerCase(), tf=$("teamFilter").value, pf=$("posFilter").value;
-  const rows=state.players.filter(p=>(!tf||p.team===tf)&&(!pf||p.pos===pf)&&(!q||`${p.name} ${p.team} ${p.username}`.toLowerCase().includes(q)));
-  $("rosterHeading").textContent=tf?`${tf} Roster`:"All Players";
-  $("playerRows").innerHTML=rows.map(p=>`<tr>
-    <td><strong>${safe(p.name)}</strong><div class="source">${safe(p.nfl||"")}</div></td>
-    <td><span class="pos">${safe(p.pos||"—")}</span></td>
-    <td>${safe(p.team)}</td>
-    <td class="${p.salary===null?"unknown":"cost"}">${p.salary===null?"Needs cost":money(p.salary)}</td>
-    <td class="source">${safe(p.source)}</td>
-  </tr>`).join("") || '<tr><td colspan="5">No matching players.</td></tr>';
-}
-function tradeCalc(){
-  const calc=(teamName,send,recv)=>{
-    const t=state.teams.find(x=>x.teamName===teamName);
-    if(!t) return null;
-    const newSalary=t.total-(Number(send)||0)+(Number(recv)||0);
-    return CAP-newSalary;
-  };
-  const a=calc($("teamA").value,$("sendA").value,$("recvA").value);
-  const b=calc($("teamB").value,$("sendB").value,$("recvB").value);
-  $("resultA").textContent=a===null?"—":money(a);
-  $("resultB").textContent=b===null?"—":money(b);
-}
-["searchBox","teamFilter","posFilter"].forEach(id=>$(id).addEventListener("input",renderRows));
-["teamA","teamB","sendA","recvA","sendB","recvB"].forEach(id=>$(id).addEventListener("input",tradeCalc));
-$("refreshBtn").addEventListener("click",load);
-document.addEventListener("copy",e=>e.preventDefault());
-document.addEventListener("contextmenu",e=>e.preventDefault());
-load();
+function renderRows(){const q=$("searchBox").value.trim().toLowerCase(),tf=$("teamFilter").value,pf=$("posFilter").value;const rows=state.players.filter(p=>(!tf||p.team===tf)&&(!pf||p.pos===pf)&&(!q||`${p.name} ${p.team} ${p.username}`.toLowerCase().includes(q)));$("rosterHeading").textContent=tf?`${tf} Roster`:"All Players";$("playerRows").innerHTML=rows.map(p=>`<tr><td><strong>${safe(p.name)}</strong><div class="source">${safe(p.nfl||"")}</div></td><td><span class="pos">${safe(p.pos||"—")}</span></td><td>${safe(p.team)}</td><td class="${p.salary===null?"unknown":"cost"}">${p.salary===null?"Needs cost":money(p.salary)}</td><td class="source">${safe(p.source)}</td></tr>`).join("")||'<tr><td colspan="5">No matching players.</td></tr>'}
+function renderDDLedger(){const rows=(custom.dd_ledger||[]).slice().sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));$("ddRows").innerHTML=rows.length?rows.map(x=>`<tr><td>${safe(x.date||"")}</td><td>${safe(x.from||"")}</td><td>${safe(x.to||"")}</td><td class="cost">${money(Number(x.amount)||0)}</td><td>${safe(x.note||"")}</td></tr>`).join(""):'<tr><td colspan="5">No Draft Dollar trades recorded yet.</td></tr>'}
+function teamPlayers(team){return state.players.filter(p=>p.team===team)}
+function renderTradePlayers(){for(const side of ["A","B"]){const team=$(side==="A"?"teamA":"teamB").value,box=$(side==="A"?"playersA":"playersB");box.innerHTML=teamPlayers(team).map(p=>`<label class="player-pick"><input class="trade-player-${side}" type="checkbox" data-salary="${p.salary===null?"":p.salary}" data-id="${safe(p.id)}"><div class="grow"><strong>${safe(p.name)}</strong><div class="source">${safe(p.pos)}</div></div><div class="sal">${p.salary===null?"?":money(p.salary)}</div></label>`).join("")||'<div class="notice" style="padding:10px">No players.</div>';box.querySelectorAll("input").forEach(x=>x.addEventListener("change",tradeCalc))}tradeCalc()}
+function selectedSalary(side){let total=0,unknown=false;document.querySelectorAll(`.trade-player-${side}:checked`).forEach(x=>{const v=Number(x.dataset.salary);if(x.dataset.salary==="")unknown=true;else total+=v});return{total,unknown}}
+function tradeCalc(){const ta=state.teams.find(x=>x.teamName===$("teamA").value),tb=state.teams.find(x=>x.teamName===$("teamB").value);if(!ta||!tb)return;const a=selectedSalary("A"),b=selectedSalary("B"),ddA=Number($("ddA").value)||0,ddB=Number($("ddB").value)||0;const finalA=CAP-(ta.total-a.total+b.total)+(ta.ddNet-ddA+ddB),finalB=CAP-(tb.total-b.total+a.total)+(tb.ddNet-ddB+ddA);$("flowA").textContent=`Send ${money(a.total)} salary · Receive ${money(b.total)} salary · DD net ${ddB-ddA>=0?"+":""}${ddB-ddA}`;$("flowB").textContent=`Send ${money(b.total)} salary · Receive ${money(a.total)} salary · DD net ${ddA-ddB>=0?"+":""}${ddA-ddB}`;$("resultA").textContent=a.unknown||b.unknown?"Needs salary fix":money(finalA);$("resultB").textContent=a.unknown||b.unknown?"Needs salary fix":money(finalB)}
+["searchBox","teamFilter","posFilter"].forEach(id=>$(id).addEventListener("input",renderRows));["teamA","teamB"].forEach(id=>$(id).addEventListener("change",renderTradePlayers));["ddA","ddB"].forEach(id=>$(id).addEventListener("input",tradeCalc));$("refreshBtn").addEventListener("click",load);document.addEventListener("copy",e=>e.preventDefault());document.addEventListener("contextmenu",e=>e.preventDefault());load();
 </script>
-</body>
-</html>
+</body></html>
