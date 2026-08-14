@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>DUHNASTY Admin Helper</title>
+<style>
+:root {
+  --bg:#07111f; --panel:#10243a; --panel2:#081624; --ink:#f7f9fc;
+  --muted:#9fb0c4; --line:#31516f; --accent:#4da3ff; --good:#68dba8;
+}
+* { box-sizing:border-box; }
+html,body {
+  margin:0; background:linear-gradient(180deg,#07111f,#0a1726);
+  color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+body { min-height:100vh; }
+main { max-width:760px; margin:auto; padding:20px 16px 56px; }
+h1 { font-size:34px; line-height:1.05; margin:10px 0 14px; }
+h2 { font-size:24px; margin:0 0 10px; }
+p { line-height:1.5; }
+.muted { color:var(--muted); font-size:14px; }
+.card {
+  background:var(--panel); border:1px solid var(--line); border-radius:20px;
+  padding:18px; margin:16px 0; box-shadow:0 12px 28px rgba(0,0,0,.18);
+}
+.field { margin-top:14px; }
+label { display:block; color:#b7c7d7; font-weight:700; margin-bottom:6px; }
+input,select,textarea {
+  width:100%; min-height:48px; border-radius:12px; border:1px solid #3a5f82;
+  background:var(--panel2); color:var(--ink); padding:11px 12px; font:inherit;
+  -webkit-appearance:none; appearance:none;
+}
+select {
+  background-image:linear-gradient(45deg,transparent 50%,#9fb0c4 50%),
+                   linear-gradient(135deg,#9fb0c4 50%,transparent 50%);
+  background-position:calc(100% - 18px) 20px,calc(100% - 12px) 20px;
+  background-size:6px 6px,6px 6px; background-repeat:no-repeat;
+  padding-right:36px;
+}
+textarea { min-height:260px; resize:vertical; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+button {
+  width:100%; margin-top:14px; min-height:48px; border:0; border-radius:12px;
+  background:#f1f3f6; color:#0a5fd8; font-weight:900; font-size:16px;
+}
+button.secondary { background:#17304a; color:#fff; border:1px solid var(--line); }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.note {
+  margin-top:12px; padding:10px 12px; border-radius:12px;
+  background:#0a1a2a; border:1px solid #294865; color:var(--muted); font-size:13px;
+}
+@media (max-width:640px) {
+  main { padding:14px 12px 46px; }
+  h1 { font-size:31px; }
+  .card { padding:16px; border-radius:18px; }
+  .grid2 { grid-template-columns:1fr; gap:0; }
+  input,select,textarea { min-height:50px; font-size:16px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>DUHNASTY Admin Helper</h1>
+  <p class="muted">This page builds the JSON data used by the live dashboard. It does not publish changes by itself; after making updates, download <b>duhnasty-data.json</b> and replace that file in GitHub.</p>
+
+  <section class="card">
+    <h2>Add Salary Override</h2>
+    <div class="field">
+<label>Player</label>
+<select id="playerSelect">
+  <option value="">Loading DUHNASTY players…</option>
+</select>
+</div>
+    <div class="field"><label>Salary</label><input id="sal" type="number" min="0" inputmode="numeric"></div>
+    <div class="field"><label>Note</label><input id="snote" placeholder="Optional"></div>
+    <button onclick="addOverride()">Add override</button>
+  </section>
+
+  <section class="card">
+    <h2>Add Draft Dollar Trade</h2>
+    <div class="grid2">
+      <div class="field"><label>Date</label><input id="date" type="date"></div>
+      <div class="field"><label>Amount</label><input id="amt" type="number" min="0" inputmode="numeric"></div>
+    </div>
+    <div class="field">
+      <label>From team/user</label>
+      <select id="from"><option value="">Select team</option><option>Antoniosademon</option>
+<option>isaaccarr15</option>
+<option>EWorkman</option>
+<option>Squibby23</option>
+<option>3bie</option>
+<option>DyldoBaggins</option>
+<option>Suckmygibbs</option>
+<option>JBoog14</option>
+<option>ZYNderella</option>
+<option>jadlap</option>
+<option>mbarber212</option>
+<option>Purdy Fly For a White Guy</option>
+<option>vgs123</option>
+<option>I Chase Brown People</option></select>
+    </div>
+    <div class="field">
+      <label>To team/user</label>
+      <select id="to"><option value="">Select team</option><option>Antoniosademon</option>
+<option>isaaccarr15</option>
+<option>EWorkman</option>
+<option>Squibby23</option>
+<option>3bie</option>
+<option>DyldoBaggins</option>
+<option>Suckmygibbs</option>
+<option>JBoog14</option>
+<option>ZYNderella</option>
+<option>jadlap</option>
+<option>mbarber212</option>
+<option>Purdy Fly For a White Guy</option>
+<option>vgs123</option>
+<option>I Chase Brown People</option></select>
+    </div>
+    <div class="field"><label>Note</label><input id="note" placeholder="Example: Trade agreement +10DD"></div>
+    <button onclick="addDD()">Add DD transfer</button>
+  </section>
+
+  <section class="card">
+    <h2>Add College Prospect Rights</h2>
+    <p class="muted">Use this for players who are still in college and are not yet in Sleeper's NFL player pool. Their DD salary is automatically $0.</p>
+    <div class="field"><label>Player name</label><input id="cname" placeholder="Example: Jeremiah Smith"></div>
+    <div class="field">
+      <label>Position</label>
+      <select id="cpos">
+        <option value="">Select position</option>
+        <option>QB</option><option>RB</option><option>WR</option><option>TE</option><option>K</option><option>DEF</option>
+      </select>
+    </div>
+    <div class="field"><label>College</label><input id="college" placeholder="Example: Ohio State"></div>
+    <div class="field">
+      <label>Rights owner / team</label>
+      <select id="cowner"><option value="">Select team</option><option>Antoniosademon</option>
+<option>isaaccarr15</option>
+<option>EWorkman</option>
+<option>Squibby23</option>
+<option>3bie</option>
+<option>DyldoBaggins</option>
+<option>Suckmygibbs</option>
+<option>JBoog14</option>
+<option>ZYNderella</option>
+<option>jadlap</option>
+<option>mbarber212</option>
+<option>Purdy Fly For a White Guy</option>
+<option>vgs123</option>
+<option>I Chase Brown People</option></select>
+    </div>
+    <div class="field"><label>Note</label><input id="cnote" placeholder="Optional: 2026 pre-draft pick"></div>
+    <button onclick="addCollege()">Add college prospect</button>
+  </section>
+
+  <section class="card">
+    <h2>Current JSON</h2>
+    <textarea id="json" spellcheck="false"></textarea>
+    <button onclick="downloadJSON()">Download duhnasty-data.json</button>
+    <button class="secondary" onclick="resetData()">Reset helper</button>
+    <div class="note">After downloading, replace <b>duhnasty-data.json</b> in your GitHub repository and commit directly to <b>main</b>.</div>
+  </section>
+</main>
+
+<script>
+let data = { salary_overrides: {}, dd_ledger: [], college_rights: [] };
+const el = id => document.getElementById(id);
+const jsonBox = el("json");
+
+function sync() {
+  jsonBox.value = JSON.stringify(data, null, 2);
+}
+
+function addOverride() {
+  const id = el("playerSelect").value;
+  const option = el("playerSelect").selectedOptions[0];
+  const playerName = option ? option.dataset.name || "" : "";
+  const amount = Number(el("sal").value);
+  const note = el("snote").value.trim();
+  if (!id || !Number.isFinite(amount)) return alert("Choose a player and enter a salary.");
+  data.salary_overrides[id] = { amount, note: note || playerName };
+  sync();
+  el("playerSelect").value="";
+  el("sal").value="";
+  el("snote").value="";
+}
+
+function addDD() {
+  const date = el("date").value;
+  const from = el("from").value;
+  const to = el("to").value;
+  const amount = Number(el("amt").value);
+  const note = el("note").value.trim();
+  if (!from || !to || from===to || !Number.isFinite(amount) || amount < 0)
+    return alert("Choose two different teams and enter a valid DD amount.");
+  data.dd_ledger.push({ date, from, to, amount, note });
+  sync();
+  el("amt").value=""; el("note").value="";
+}
+
+function addCollege() {
+  const name = el("cname").value.trim();
+  const position = el("cpos").value;
+  const college = el("college").value.trim();
+  const owner = el("cowner").value;
+  const note = el("cnote").value.trim();
+  if (!name || !position || !owner) return alert("Enter player name, position, and rights owner.");
+  data.college_rights.push({ name, position, college, owner, note });
+  sync();
+  el("cname").value=""; el("cpos").value=""; el("college").value=""; el("cnote").value="";
+}
+
+jsonBox.addEventListener("input", () => {
+  try { data = JSON.parse(jsonBox.value); } catch (e) {}
+});
+
+function downloadJSON() {
+  let parsed;
+  try { parsed = JSON.parse(jsonBox.value); }
+  catch (e) { return alert("The JSON contains an error."); }
+  const blob = new Blob([JSON.stringify(parsed, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "duhnasty-data.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function resetData() {
+  if (!confirm("Reset all entries in this helper?")) return;
+  data = { salary_overrides: {}, dd_ledger: [], college_rights: [] };
+  sync();
+}
+
+const LEAGUE_ID = "1307048224447561728";
+const API = "https://api.sleeper.app/v1";
+
+async function getJSON(url) {
+  const r = await fetch(url, {cache:"no-store"});
+  if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+  return r.json();
+}
+
+async function loadPlayerDropdown() {
+  const select = el("playerSelect");
+  try {
+    const [rosters, users, players] = await Promise.all([
+      getJSON(`${API}/league/${LEAGUE_ID}/rosters`),
+      getJSON(`${API}/league/${LEAGUE_ID}/users`),
+      getJSON(`${API}/players/nfl`)
+    ]);
+
+    const userMap = Object.fromEntries((users || []).map(u => [u.user_id, u]));
+    const rows = [];
+
+    for (const r of rosters || []) {
+      const u = userMap[r.owner_id] || {};
+      const team = u?.metadata?.team_name || u.display_name || u.username || `Roster ${r.roster_id}`;
+      for (const id of (r.players || [])) {
+        const p = players[id] || {};
+        const name = [p.first_name, p.last_name].filter(Boolean).join(" ") || p.full_name || id;
+        const pos = p.position || "";
+        rows.push({id:String(id), name, pos, team});
+      }
+    }
+
+    rows.sort((a,b) => a.team.localeCompare(b.team) || a.name.localeCompare(b.name));
+
+    select.innerHTML = '<option value="">Select player</option>' +
+      rows.map(x => `<option value="${x.id}" data-name="${x.name}">${x.name} · ${x.pos || "—"} · ${x.team}</option>`).join("");
+  } catch (e) {
+    console.error(e);
+    select.innerHTML = '<option value="">Could not load players</option>';
+  }
+}
+
+loadPlayerDropdown();
+sync();
+</script>
+</body>
+</html>
