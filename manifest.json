@@ -1,0 +1,9 @@
+{
+  "name": "DUHNASTY Dynasty Command Center",
+  "short_name": "DUHNASTY",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "description": "DUHNASTY salary, Draft Dollar, prospect rights and trade dashboard."
+}
