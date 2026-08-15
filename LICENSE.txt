@@ -1,0 +1,22 @@
+DUHNASTY PROPRIETARY SOFTWARE LICENSE
+Copyright © 2026 Darius E. Workman. All Rights Reserved.
+
+This software, source code, user interface, visual design, documentation, and original
+league-management logic (collectively, the "Software") are proprietary works.
+
+No permission is granted to copy, reproduce, modify, adapt, translate, publish, distribute,
+sell, sublicense, rent, lease, create derivative works from, commercially exploit, or make
+the Software available to any third party, in whole or in substantial part, without the
+prior written permission of the copyright owner.
+
+Viewing and using the hosted DUHNASTY dashboard for its intended league-reference purpose
+does not grant ownership of or a license to reuse the Software.
+
+Third-party names, data, services, and trademarks remain the property of their respective
+owners. Football-inspired color palettes are unofficial and do not imply affiliation,
+sponsorship, or endorsement by the National Football League or any member club.
+
+THE SOFTWARE IS PROVIDED "AS IS" FOR ITS CURRENT PRIVATE LEAGUE USE, WITHOUT WARRANTIES
+OF ANY KIND TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW.
+
+For licensing permission, contact the copyright owner.
